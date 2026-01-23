@@ -1,0 +1,11 @@
+print("โปรแกรมคำนวณแคลอรี่")
+
+morning = int(input("แคลอรี่มื้อเช้า (kcal): "))
+lunch = int(input("แคลอรี่มื้อกลางวัน (kcal): "))
+evening = int(input("แคลอรี่มื้อเย็น (kcal): "))
+total = morning + lunch + evening
+print("\nสรุปแคลอรี่ที่ได้รับ")
+print("มื้อเช้า:", morning, "kcal")
+print("มื้อกลางวัน:", lunch, "kcal")
+print("มื้อเย็น:", evening, "kcal")
+print("รวมทั้งหมด:", total, "kcal")
