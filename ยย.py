@@ -1,0 +1,76 @@
+import tkinter as tk
+from tkinter import messagebox
+
+def calculate():
+    try:
+        morning = int(entry_morning.get())
+        lunch = int(entry_lunch.get())
+        evening = int(entry_evening.get())
+
+        total = morning + lunch + evening
+
+        # เปลี่ยนสีข้อความตามจำนวนแคลอรี่ (ตัวอย่างการตกแต่งเชิงฟังก์ชัน)
+        if total > 2000:
+            result_label.config(fg="#e74c3c") # สีแดงถ้าทานเยอะ
+        else:
+            result_label.config(fg="#27ae60") # สีเขียวถ้าพอดี
+
+        result_label.config(
+            text=f"--- สรุปแคลอรี่ ---\n"
+                 f"เช้า: {morning} kcal\n"
+                 f"กลางวัน: {lunch} kcal\n"
+                 f"เย็น: {evening} kcal\n"
+                 f"รวมทั้งหมด: {total} kcal"
+        )
+    except ValueError:
+        messagebox.showerror("ข้อผิดพลาด", "กรุณากรอกเฉพาะตัวเลขนะครับ")
+
+# --- การตั้งค่าสีและฟอนต์ ---
+BG_MAIN = "#FDFEFE"      # สีพื้นหลังหน้าต่าง
+BG_CARD = "#F4F6F7"      # สีพื้นหลังกล่องข้อความ
+PRIMARY_COLOR = "#2ECC71" # สีเขียวหลัก (ปุ่ม)
+TEXT_COLOR = "#2C3E50"    # สีตัวอักษรเข้ม
+FONT_TH = ("Leelawadee UI", 12) # ฟอนต์ที่ดูทันสมัย
+FONT_BOLD = ("Leelawadee UI", 14, "bold")
+
+# สร้างหน้าต่างหลัก
+root = tk.Tk()
+root.title("Calorie Tracker")
+root.geometry("350x450")
+root.config(bg=BG_MAIN)
+
+# หัวข้อโปรแกรม
+tk.Label(root, text="Calories Calculator 🍎", font=("Leelawadee UI", 18, "bold"), 
+         bg=BG_MAIN, fg=PRIMARY_COLOR).pack(pady=20)
+
+# สร้าง Frame สำหรับส่วนรับข้อมูลเพื่อให้ดูเป็นระเบียบ
+input_frame = tk.Frame(root, bg=BG_MAIN)
+input_frame.pack(padx=20)
+
+def create_input(label_text):
+    """ฟังก์ชันช่วยสร้าง Label และ Entry เพื่อลดโค้ดซ้ำซ้อน"""
+    tk.Label(input_frame, text=label_text, font=FONT_TH, bg=BG_MAIN, fg=TEXT_COLOR).pack(anchor="w")
+    entry = tk.Entry(input_frame, font=FONT_TH, bd=0, highlightthickness=1, highlightbackground="#D5DBDB")
+    entry.pack(fill="x", pady=(0, 10), ipady=5)
+    return entry
+
+entry_morning = create_input("มื้อเช้า (kcal):")
+entry_lunch = create_input("มื้อกลางวัน (kcal):")
+entry_evening = create_input("มื้อเย็น (kcal):")
+
+# ปุ่มคำนวณแบบแต่งสี
+btn_calculate = tk.Button(root, text="คำนวณผลลัพธ์", command=calculate,
+                          font=FONT_BOLD, bg=PRIMARY_COLOR, fg="white",
+                          activebackground="#27AE60", activeforeground="white",
+                          cursor="hand2", bd=0, width=15)
+btn_calculate.pack(pady=20)
+
+# แสดงผลลัพธ์ในพื้นที่สีเทาอ่อน
+result_frame = tk.Frame(root, bg=BG_CARD, padx=10, pady=10, relief="flat")
+result_frame.pack(fill="x", padx=30)
+
+result_label = tk.Label(result_frame, text="ผลลัพธ์จะแสดงตรงนี้", font=FONT_TH, 
+                        bg=BG_CARD, fg="#7F8C8D", justify="left")
+result_label.pack()
+
+root.mainloop()
